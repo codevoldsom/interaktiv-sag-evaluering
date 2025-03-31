@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evaluering af Psykiatriske Sager</title>
+  <style>
+    /* Enkel CSS for et rent layout */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f4f4f4;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      text-align: center;
+      color: #005;
+    }
+    .article {
+      border-bottom: 1px solid #ccc;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+    }
+    .reference {
+      font-size: 0.9em;
+      color: #666;
+    }
+    nav {
+      text-align: center;
+      margin-top: 20px;
+    }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #005;
+      font-weight: bold;
+    }
+    .question {
+      border: 1px solid #ddd;
+      background: #eee;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 15px 0;
+    }
+    .question input {
+      margin-right: 10px;
+    }
+    .button {
+      display: inline-block;
+      margin: 15px 0;
+      padding: 10px 15px;
+      background: #007BFF;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Side 1 – Artikelliste (Telefonbogslayout) -->
+  <div class="container" id="page1">
+    <h1>Evaluering af Psykiatriske Sager</h1>
+    <h2>Telefonbogslayout – Artikelliste</h2>
+    <div class="article">
+      <strong>1. Forfulgt af en fejldiagnose – Ali’s historie</strong><br>
+      En personlig fortælling om 10 års fejldiagnose, der førte til unødvendig behandling og stigmatisering. <br>
+      <span class="reference">(Link: <a href="https://psykiatrifonden.dk/viden/personlige-fortaellinger/forfulgt-fejldiagnose" target="_blank">https://psykiatrifonden.dk/viden/personlige-fortaellinger/forfulgt-fejldiagnose</a>), [Ref. 1]</span>
+    </div>
+    <div class="article">
+      <strong>2. Skizofreni og andre primære psykoselidelser – kliniske retningslinjer</strong><br>
+      Detaljeret udredning med fokus på, hvordan fejldiagnoser opstår og dokumenteres i de kliniske retningslinjer. <br>
+      <span class="reference">(Link: <a href="https://www.dp.dk/wp-content/uploads/2023/10/RL_skizofreni_diagn_udredn_v1.0_290923_HOeRING.pdf" target="_blank">https://www.dp.dk/…</a>), [Ref. 2]</span>
+    </div>
+    <!-- Flere artikler kan tilføjes her i samme format -->
+    <nav>
+      <a href="#page2" onclick="showPage('page2');">Konklusion</a>
+      <a href="#page3" onclick="showPage('page3');">Spørgeskema</a>
+    </nav>
+  </div>
+
+  <!-- Side 2 – Konklusion -->
+  <div class="container hidden" id="page2">
+    <h1>Konklusion og Evaluering</h1>
+    <p>
+      Samlet analyse viser, at fejldiagnostisering i psykiatrien ofte skyldes misbrug af forældede diagnosekoder (fx ICD‑10 F20) samt manglende integration af moderne tests (fx WAIS‑4). Overtrædelser af lovkrav, herunder "Lov om Patientsikkerhed" og "Lov om Sundhedsvæsenets Organisation", fremgår tydeligt. Myndighedsindgreb – for eksempel politianmeldelser eller tidlige interventioner fra kommunen – kunne potentielt have afhjulpet mange af de sager, vi har set. Med et scorebaseret system for de nøgleelementer kan en potentielt erstatningsgevinst estimeres til mellem 25.000 og 500.000 DKK. [Ref. 16-20]
+    </p>
+    <nav>
+      <a href="#page1" onclick="showPage('page1');">Artikler</a>
+      <a href="#page3" onclick="showPage('page3');">Spørgeskema</a>
+    </nav>
+  </div>
+
+  <!-- Side 3 – Spørgeskema -->
+  <div class="container hidden" id="page3">
+    <h1>Spørgeskema – Evaluering af Sagen</h1>
+    <form id="evalForm">
+      <div class="question">
+        <label><strong>(Ref. 1, V = 9)</strong> Har du observeret, at diagnosen F20 er anvendt på patienter med tydelige autistiske træk?</label><br>
+        <input type="radio" name="q1" value="9"> Ja 
+        <input type="radio" name="q1" value="0"> Nej
+      </div>
+      <div class="question">
+        <label><strong>(Ref. 2, V = 8)</strong> Er der dokumenteret tilfælde, hvor F84 blev overset, selvom patienten viste autismediagnostiske indikatorer?</label><br>
+        <input type="radio" name="q2" value="8"> Ja 
+        <input type="radio" name="q2" value="0"> Nej
+      </div>
+      <!-- Yderligere spørgsmål fra 3 til 20 kan tilføjes her på samme måde -->
+      <div class="question">
+        <label><strong>(Ref. 20, V = 10)</strong> Mener du, at en standardiseret numerisk registrering vil øge chancerne for en succesfuld klagesag?</label><br>
+        <input type="radio" name="q20" value="10"> Ja 
+        <input type="radio" name="q20" value="0"> Nej
+      </div>
+      <button type="submit" class="button">Beregn Score</button>
+    </form>
+    <div id="result" style="margin-top:20px; font-size: 1.2em;"></div>
+    <nav>
+      <a href="#page1" onclick="showPage('page1');">Artikler</a>
+      <a href="#page2" onclick="showPage('page2');">Konklusion</a>
+    </nav>
+  </div>
+
+  <script>
+    // Funktion til at skifte mellem sider
+    function showPage(pageId){
+      document.querySelectorAll('.container').forEach(function(el){
+        el.classList.add('hidden');
+      });
+      document.getElementById(pageId).classList.remove('hidden');
+    }
+
+    // Enkel form-beregning af score og estimeret erstatning
+    document.getElementById("evalForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      let totalScore = 0, maxScore = 0;
+      // Vi antager, at vi har 20 spørgsmål
+      for (let i = 1; i <= 20; i++){
+        let radios = document.getElementsByName("q" + i);
+        maxScore += parseInt(radios[0].value); // Antager at første radio repræsenterer den fulde værdi
+        for (let radio of radios){
+          if (radio.checked){
+            totalScore += parseInt(radio.value);
+          }
+        }
+      }
+      let s = maxScore > 0 ? totalScore / maxScore : 0;
+      // Estimeret erstatning: mellem 25000 og 500000 DKK
+      let G = 25000 + s * (500000 - 25000);
+      document.getElementById("result").innerText = "Samlet Score: " + (s*100).toFixed(1) + "%\n" +
+        "Estimeret Erstatningsgevinst: " + G.toFixed(0) + " DKK";
+    });
+  </script>
+</body>
+</html>
