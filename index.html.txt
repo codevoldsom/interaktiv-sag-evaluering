@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evaluering af Psykiatriske Sager</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+    header {
+      background-color: #005;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+    /* Grid container for forsidens artikler (et par eksempler) */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-gap: 15px;
+      padding: 20px;
+    }
+    .grid-item {
+      background-color: #064f2a; /* Mørkegrøn */
+      color: white;
+      position: relative;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .grid-item:hover {
+      transform: scale(1.05);
+    }
+    /* Den gule sticky note */
+    .sticky {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: #ffcc00;
+      color: #333;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 5px 8px;
+      transform: rotate(10deg);
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+      border-radius: 3px;
+    }
+    /* Navigation */
+    nav {
+      text-align: center;
+      margin: 20px;
+    }
+    nav a, nav button {
+      text-decoration: none;
+      color: #005;
+      font-weight: bold;
+      margin: 10px;
+      padding: 10px 20px;
+      background: #e0e0e0;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    /* Modal styling for fuld sagliste */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 1000px;
+    }
+    .close-btn {
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    /* Spørgeskema container */
+    .form-container {
+      margin: 40px auto;
+      max-width: 800px;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>Evaluering af Psykiatriske Sager</h1>
+  </header>
+
+  <!-- Forside: Grid med udvalgte artikler og en knap til at se fuld sagliste -->
+  <div class="grid-container" id="forsideGrid">
+    <!-- Eksempel på et par artikler -->
+    <div class="grid-item" onclick="window.location.href='https://psykiatrifonden.dk/viden/personlige-fortaellinger/forfulgt-fejldiagnose';">
+      <div class="sticky">Ref. 1</div>
+      <span>Forfulgt af fejldiagnose</span>
+    </div>
+    <div class="grid-item" onclick="window.location.href='https://www.dp.dk/wp-content/uploads/2023/10/RL_skizofreni_diagn_udredn_v1.0_290923_HOeRING.pdf';">
+      <div class="sticky">Ref. 2</div>
+      <span>Skizofreni & Psykoselidelser</span>
+    </div>
+    <!-- Kun et par udvalgte cases vises her -->
+  </div>
+
+  <nav>
+    <button onclick="openModal()">Vis alle 150 sager</button>
+    <button onclick="showSection('sporgeskema')">Spørgeskema</button>
+  </nav>
+
+  <!-- Modal: Fuld liste med alle sager -->
+  <div id="caseModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h2>Komplet Liste af Sager</h2>
+      <div class="grid-container" style="grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));">
+        <!-- Eksempel: Her skal du have 150 sager; nedenfor vises blot 5 som demo -->
+        <div class="grid-item" style="height:100px;" onclick="window.location.href='https://link-til-sag1.dk';">
+          <div class="sticky">Ref. 1</div>
+          <span>Sag 1</span>
+        </div>
+        <div class="grid-item" style="height:100px;" onclick="window.location.href='https://link-til-sag2.dk';">
+          <div class="sticky">Ref. 2</div>
+          <span>Sag 2</span>
+        </div>
+        <div class="grid-item" style="height:100px;" onclick="window.location.href='https://link-til-sag3.dk';">
+          <div class="sticky">Ref. 3</div>
+          <span>Sag 3</span>
+        </div>
+        <div class="grid-item" style="height:100px;" onclick="window.location.href='https://link-til-sag4.dk';">
+          <div class="sticky">Ref. 4</div>
+          <span>Sag 4</span>
+        </div>
+        <div class="grid-item" style="height:100px;" onclick="window.location.href='https://link-til-sag5.dk';">
+          <div class="sticky">Ref. 5</div>
+          <span>Sag 5</span>
+        </div>
+        <!-- Gentag for at nå ca. 150 sager ... -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Spørgeskema sektion -->
+  <div class="form-container" id="sporgeskema" style="display:none;">
+    <h2>Spørgeskema – Evaluering af Sagen</h2>
+    <form id="evalForm">
+      <div style="margin-bottom: 15px;">
+        <label><strong>(Ref. 1, V = 9)</strong> Har du observeret, at diagnosen F20 er anvendt på patienter med tydelige autistiske træk?</label><br>
+        <input type="radio" name="q1" value="9"> Ja 
+        <input type="radio" name="q1" value="0"> Nej
+      </div>
+      <div style="margin-bottom: 15px;">
+        <label><strong>(Ref. 2, V = 8)</strong> Er der dokumenteret tilfælde, hvor F84 blev overset, selvom patienten viste relevante autismediagnostiske indikatorer?</label><br>
+        <input type="radio" name="q2" value="8"> Ja 
+        <input type="radio" name="q2" value="0"> Nej
+      </div>
+      <div style="margin-bottom: 15px;">
+        <label><strong>(Ref. 3, V = 10)</strong> Modbeviser tilstrækkelige tests resultaterne klart den påståede diagnose i sag 3?</label><br>
+        <input type="radio" name="q3" value="10"> Ja 
+        <input type="radio" name="q3" value="0"> Nej
+      </div>
+      <!-- Yderligere spørgsmål kan tilføjes her, med referencer der matcher sagerne i grid'et -->
+      <button type="submit" style="padding: 10px 15px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">Beregn Score</button>
+    </form>
+    <div id="result" style="margin-top:20px; font-size:1.2em;"></div>
+  </div>
+
+  <script>
+    // Funktion til at åbne modal
+    function openModal() {
+      document.getElementById("caseModal").style.display = "block";
+    }
+    // Funktion til at lukke modal
+    function closeModal() {
+      document.getElementById("caseModal").style.display = "none";
+    }
+    // Skift mellem sektioner: viser spørgeskema sektionen
+    function showSection(sectionId) {
+      // Skjul alle hovedsektioner
+      document.getElementById("sporgeskema").style.display = "none";
+      // Udvid tilgængelige sektioner, hvis der er flere, kan du tilføje flere elementer her
+      if(sectionId === "sporgeskema"){
+        document.getElementById("sporgeskema").style.display = "block";
+        // Scroll til spørgeskema sektionen
+        document.getElementById("sporgeskema").scrollIntoView({behavior:"smooth"});
+      }
+    }
+    // Enkel form-beregning af score og estimeret erstatning
+    document.getElementById("evalForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      let totalScore = 0, maxScore = 0;
+      // Til denne demo antages 3 spørgsmål; udvid med et loop for alle spørgsmål efter behov
+      let questions = ["q1", "q2", "q3"];
+      questions.forEach(function(qName) {
+        let radios = document.getElementsByName(qName);
+        if (radios.length > 0) {
+          maxScore += parseInt(radios[0].value); // antag første radio repræsenterer maxværdien
+          for (let radio of radios) {
+            if (radio.checked) {
+              totalScore += parseInt(radio.value);
+            }
+          }
+        }
+      });
+      let s = maxScore > 0 ? totalScore / maxScore : 0;
+      let G = 25000 + s * (500000 - 25000);
+      document.getElementById("result").innerText = "Samlet Score: " + (s * 100).toFixed(1) + "%\n" +
+        "Estimeret Erstatningsgevinst: " + G.toFixed(0) + " DKK";
+    });
+  </script>
+</body>
+</html>
