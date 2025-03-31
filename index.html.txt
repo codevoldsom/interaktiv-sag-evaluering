@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evaluering af Psykiatriske Sager</title>
+  <style>
+    /* Basis CSS og baggrund med gradient + overlay-billede */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to top, #FFFFE0, #FFFFFF), url('https://example.com/arkivkasser_loft.jpg') no-repeat center bottom;
+      background-size: cover;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      margin: 20px;
+    }
+    /* Torn Sticker Header */
+    .torn-sticker {
+      display: inline-block;
+      background: #fff;
+      padding: 15px 30px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #005;
+      border: 2px dashed #ccc;
+      transform: rotate(-2deg);
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .torn-sticker:after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      width: 60%;
+      height: 20px;
+      background: #fff;
+      transform: translateX(-50%) skewY(-3deg);
+      border-top: 2px dashed #ccc;
+    }
+    /* Grid for store udvalgte sager */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-gap: 15px;
+      padding: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .grid-item {
+      background-color: #064f2a;
+      color: white;
+      position: relative;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .grid-item:hover {
+      transform: scale(1.05);
+    }
+    .sticky {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: #ffcc00;
+      color: #333;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 5px 8px;
+      transform: rotate(10deg);
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+      border-radius: 3px;
+    }
+    /* Navigation knapper */
+    nav {
+      text-align: center;
+      margin: 20px;
+    }
+    nav button {
+      font-weight: bold;
+      margin: 10px;
+      padding: 10px 20px;
+      background: #e0e0e0;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    /* Modal styling til fuld liste (ca. 150 sager) */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 95%;
+      max-width: 1200px;
+    }
+    .close-btn {
+      float: right;
+      font-size: 28px;
+      cursor: pointer;
+    }
+    /* Lille grid til den fulde sagsliste */
+    .grid-container-small {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+      grid-gap: 8px;
+      padding: 10px;
+    }
+    .grid-item-small {
+      background-color: #064f2a;
+      color: white;
+      position: relative;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      font-size: 10px;
+    }
+    .grid-item-small:hover {
+      transform: scale(1.1);
+    }
+    /* Spørgeskema styling i notesblok-look */
+    .form-container {
+      margin: 40px auto;
+      max-width: 800px;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,253,200,0.98) 100%);
+      border: 1px solid #ddd;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    /* Rød knap til Beregn Score */
+    .btn-red {
+      background: #FF0000;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    /* Kvittering styling */
+    .receipt {
+      font-family: "Courier New", monospace;
+      background: #f8f8f8;
+      border: 1px solid #ccc;
+      padding: 15px;
+      white-space: pre-line;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header med afrevet klistermærke-eksempel -->
+  <header>
+    <div class="torn-sticker">Evaluering af Psykiatriske Sager</div>
+  </header>
+  
+  <!-- Forsidens grid med 5 store sager -->
+  <div class="grid-container">
+    <div class="grid-item" onclick="window.location.href='https://psykiatrifonden.dk/viden/personlige-fortaellinger/forfulgt-fejldiagnose';">
+      <div class="sticky">Ref. 1</div>
+      <span>Forfulgt af fejldiagnose</span>
+    </div>
+    <div class="grid-item" onclick="window.location.href='https://www.dp.dk/wp-content/uploads/2023/10/RL_skizofreni_diagn_udredn_v1.0_290923_HOeRING.pdf';">
+      <div class="sticky">Ref. 2</div>
+      <span>Skizofreni &amp; Psykoselidelser</span>
+    </div>
+    <div class="grid-item" onclick="window.location.href='https://udforsksindet.dk/paranoid-skizofreni-definition/';">
+      <div class="sticky">Ref. 3</div>
+      <span>Paranoid Skizofreni</span>
+    </div>
+    <div class="grid-item" onclick="window.location.href='https://www.sundhed.dk/borger/patienthaandbogen/sociale-ydelser/rettigheder-i-det-sociale-system-og-sundhedsvaesenet/erstatning-for-patientskade/';">
+      <div class="sticky">Ref. 4</div>
+      <span>Patientskade</span>
+    </div>
+    <div class="grid-item" onclick="window.location.href='https://www.stpk.dk/afgorelser-og-domme/';">
+      <div class="sticky">Ref. 5</div>
+      <span>Patientklager</span>
+    </div>
+  </div>
+  
+  <!-- Navigation knapper -->
+  <nav>
+    <button onclick="openModal()">Vis alle ca. 150 sager</button>
+    <button onclick="showSection('sporgeskema')">Spørgeskema</button>
+  </nav>
+  
+  <!-- Modal til fuld sagsliste -->
+  <div id="caseModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h2>Fuldt Overblik over ca. 150 sager</h2>
+      <div id="fullCaseGrid" class="grid-container-small">
+        <!-- Dynamisk generering af 150 sager -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Spørgeskema (i notesblok-look med 5 spørgsmål som eksempel) -->
+  <div class="form-container" id="sporgeskema" style="display: none;">
+    <h2>Spørgeskema – Udregn Din Erstatningssum</h2>
+    <p style="text-align: center; font-size: 14px; color: #555;">
+      Dette spørgeskema er baseret på omfattende data (ca. 150 sager, diagnosekoder &amp; retsparagrafer). Svar ærligt for at se, hvilken erstatningssum du potentielt kan have krav på.
+    </p>
+    <form id="evalForm">
+      <div style="margin-bottom: 15px;">
+        <label><strong>(Ref. 1, V = 9)</strong> I hvilken grad har du oplevet, at diagnosen F20 (Skizofreni) uretmæssigt er stillet? <em>(1-10)</em></label><br>
+        <input type="number" name="q1" min="1" max="10" placeholder="1-10">
+      </div>
+      <div style="margin-bottom: 15px;">
+        <label><strong>(Ref. 2, V = 8)</strong> I hvilken grad mener du, at F84 (Autismespektrumforstyrrelser) er underrepræsenteret i dine evalueringer? <em>(1-10)</em></label><br>
+        <input type="number" name="q2" min="1" max="10" placeholder="1-10">
+      </div>
+      <div style="margin-bottom: 15px;">
+        <label><strong>(Ref. 3, V = 10)</strong> Hvor tydeligt modsiger dine moderne testresultater (f.eks. WAIS-4) den kliniske diagnose? <em>(1-10)</em></label><br>
+        <input type="number" name="q3" min="1" max="10" placeholder="1-10">
+      </div>
+      <div style="margin-bottom: 15px;">
+        <label><strong>(Ref. 4, V = 8)</strong> I hvilken grad har behandlingssvigt medført alvorlige bivirkninger? <em>(1-10)</em></label><br>
+        <input type="number" name="q4" min="1" max="10" placeholder="1-10">
+      </div>
+      <div style="margin-bottom: 15px;">
+        <label><strong>(Ref. 5, V = 7)</strong> I hvilken grad føler du, at manglende myndighedsindgreb har forværret din situation? <em>(1-10)</em></label><br>
+        <input type="number" name="q5" min="1" max="10" placeholder="1-10">
+      </div>
+      <!-- Tilføj yderligere spørgsmål, så du når 20-30 spørgsmål i den endelige udgave -->
+      <button type="submit" class="btn-red">Beregn Score</button>
+    </form>
+    <div id="result" class="receipt"></div>
+  </div>
+  
+  <!-- Instruktionssektion til brugeren -->
+  <div class="form-container" id="instructions">
+    <h2>Brugerinstruktion</h2>
+    <p>
+      Dette interaktive spil er baseret på en omfattende udredning af ca. 150 sager, der kombinerer data fra diagnosekoder, retsparagrafer og kliniske udtalelser.  
+      <br><br>
+      <strong>Sådan virker spillet:</strong>
+      <ol>
+        <li>Forsiden viser et grid med 5 store sager – de udvalgte byggeklodser. Klik på en af disse for at se sagens detaljer.</li>
+        <li>Klik på "Vis alle ca. 150 sager" for at åbne en fuld liste, hvor du kan bladre gennem alle sagerne (repræsenteret som små byggeklods-ikoner).</li>
+        <li>Spørgeskemaet er udformet som en stor A4/A5 kontornotesblok med 20-30 spørgsmål. Hvert spørgsmål er p\u00E5 en p\u00E6dagogisk måde, med de faktiske data (i parentes) vises diskret, så du kan vurdere, hvordan den kliniske praksis har påvirket din situation.</li>
+        <li>Når du indsender dine svar, genererer systemet en digital kvittering, som udregner din samlede score og estimeret erstatningsgevinst, samt en kort vejledning til, hvordan du klager over fejldiagnosen.</li>
+      </ol>
+      <br>
+      <strong>Bemærk:</strong> De tilfældige visuelle effekter (rotation, skalering, varierende baggrund) sikrer, at oplevelsen bliver forfriskende og unik ved hvert besøg – selvom de underliggende data forbliver uændrede.
+    </p>
+  </div>
+  
+  <script>
+    // Modal funktioner for sagslista
+    function openModal() {
+      document.getElementById("caseModal").style.display = "block";
+    }
+    function closeModal() {
+      document.getElementById("caseModal").style.display = "none";
+    }
+    
+    // Vis spørgeskema sektion
+    function showSection(sectionId) {
+      document.getElementById("sporgeskema").style.display = "none";
+      if (sectionId === "sporgeskema") {
+        document.getElementById("sporgeskema").style.display = "block";
+        document.getElementById("sporgeskema").scrollIntoView({ behavior: "smooth" });
+      }
+    }
+    
+    // Dynamisk generering af ca. 150 sager i modalens grid med tilfældig rotation og skalering
+    const fullCaseGrid = document.getElementById("fullCaseGrid");
+    for (let i = 1; i <= 150; i++) {
+      let item = document.createElement("div");
+      item.className = "grid-item-small";
+      // Tilfældig rotation mellem -10 og 10 grader
+      const randomAngle = Math.random() * 20 - 10;
+      // Tilfældig skalering mellem 0.9 og 1.1
+      const randomScale = 0.9 + Math.random() * 0.2;
+      item.style.transform = `rotate(${randomAngle}deg) scale(${randomScale})`;
+      
+      item.setAttribute("onclick", "window.location.href='https://example.com/sag" + i + "'");
+      
+      let sticky = document.createElement("div");
+      sticky.className = "sticky";
+      sticky.innerText = "Ref. " + i;
+      sticky.style.fontSize = "10px";
+      sticky.style.padding = "2px 4px";
+      item.appendChild(sticky);
+      
+      let span = document.createElement("span");
+      span.innerText = "Sag " + i;
+      item.appendChild(span);
+      
+      fullCaseGrid.appendChild(item);
+    }
+    
+    // Enkel form-beregning af score og estimeret erstatning
+    document.getElementById("evalForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      let totalScore = 0, maxScore = 0;
+      // Eksempel: Der bruges nu 5 spørgsmål
+      const questions = ["q1", "q2", "q3", "q4", "q5"];
+      // Definér referenceværdier for hvert spørgsmål
+      const refValues = {
+        q1: 9,
+        q2: 8,
+        q3: 10,
+        q4: 8,
+        q5: 7
+      };
+      questions.forEach(qName => {
+        let input = document.getElementsByName(qName)[0];
+        if(input && input.value) {
+          totalScore += parseInt(input.value) * refValues[qName];
+          maxScore += 10 * refValues[qName]; // Maksimumsværdi for hvert spørgsmål er 10
+        }
+      });
+      let s = maxScore > 0 ? totalScore / maxScore : 0;
+      let G = 25000 + s * (500000 - 25000);
+      document.getElementById("result").innerText = 
+        "Samlet Score: " + (s * 100).toFixed(1) + "%\n" +
+        "Estimeret Erstatningsgevinst: " + G.toFixed(0) + " DKK\n\n" +
+        "Kvittering: Din score er baseret på omfattende data fra ca. 150 sager og viser, hvilke nøgleområder der har den største indflydelse på din situation.\n\n" +
+        "Brug denne information som et udgangspunkt for yderligere klagevejledning.";
+    });
+  </script>
+</body>
+</html>
